@@ -21,8 +21,8 @@ valid 00      00:00
 valid 00:00   00:00
 valid 12      12:00
 valid 12:00   12:00
-valid 24      24:00
-valid 24:00   24:00
+valid 24      00:00
+valid 24:00   00:00
 valid 4:20    04:20
 valid 04:20   04:20
 valid 13:37   13:37

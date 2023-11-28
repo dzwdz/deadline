@@ -81,6 +81,17 @@ minute(int n)
 	return n % 60;
 }
 
+bool
+isbetween(int from, int now, int to)
+{
+	assert(from != to);
+	if (from < to) {
+		return from <= now && now < to;
+	} else {
+		return from <= now || now < to;
+	}
+}
+
 int
 main(int argc, char **argv)
 {
@@ -88,13 +99,22 @@ main(int argc, char **argv)
 		errx(1, "no arguments");
 	} else if (argc == 2) {
 		int t = time_parse(argv[1]);
-		fprintf(stderr, "got only one argument, assuming you're testing the hour parser...\n");
+		fprintf(stderr, "got only one argument, assuming you're testing the time parser...\n");
 		printf("%02d:%02d\n", hour(t), minute(t));
 	} else {
 		int from = time_parse(argv[1]);
 		int to   = time_parse(argv[2]);
 		if (from == to) {
 			errx(1, "\"from\" and \"to\" times must be different");
+		}
+		assert( isbetween(from, from, to));
+		assert(!isbetween(from, to, to));
+		fprintf(stderr, "from %02d:%02d ", hour(from), minute(from));
+		fprintf(stderr, "to %02d:%02d ", hour(to), minute(to));
+		fprintf(stderr, "(%s run at midnight)\n", isbetween(from, 0, to) ? "will" : "won't");
+		if (argc == 3) {
+			fprintf(stderr, "...except you gave me no command to run. goodbye!\n");
+			exit(0);
 		}
 	}
 }
